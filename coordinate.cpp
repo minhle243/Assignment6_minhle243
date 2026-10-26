@@ -24,13 +24,13 @@ void add_coordinate(Coordinate *list_end, float x, float y) {
     new_node->next = nullptr;
     new_node->previous = list_end;
 
-    // walk back to the beginning so we can count the list
+    // back to beginning so we can count the list
     Coordinate *head = list_end;
     while (head->previous != nullptr) {
         head = head->previous;
     }
 
-    // new node isn't linked yet, so add 1 to get the next id
+    //add 1 to get the next id to link the new node
     new_node->coord_id = list_length(head) + 1;
 
     list_end->next = new_node;
@@ -66,8 +66,8 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete) {
         if (current->coord_id == coord_id_to_delete) {
 
             // special case: deleting the first node
-            // main's pointer can't change, so copy node 2 into node 1
-            // and delete node 2 instead
+            // main's pointer can't change so I copy node 2 into node 1
+            
             if (current == list_beginning) {
                 Coordinate *second = current->next;
                 if (second == nullptr) {
@@ -86,13 +86,13 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete) {
                 return;
             }
 
-            // normal case: connect the neighbors to each other
+            
             current->previous->next = current->next;
             if (current->next != nullptr) {
                 current->next->previous = current->previous;
             }
 
-            // clean up dynamically allocated memory
+            // clean up memory
             delete current;
             std::cout << "\nDeleted coordinate ID: " << coord_id_to_delete << "\n";
             return;
@@ -102,7 +102,7 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete) {
     std::cout << "\nCoordinate ID " << coord_id_to_delete << " not found.\n";
 }
 
-// finds the coordinate closest to (x, y) and prints it with the distance
+// finds the coordinate closest to (x, y)
 void closest_to(Coordinate *list_beginning, float x, float y) {
     if (list_beginning == nullptr) return;
 
